@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <header th:replace="layout/layout :: header"></header>
+        <div id="page-wrapper">
+        
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" th:text="${titulo}"></h1>
+                </div>
+            </div>
+            
+            <div th:object="${usuario}" th:remove="tag">
+				<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+					role="alert">
+					<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+				</ul>
+			</div>
+			
+            <form th:action="@{/usuarios/alumnos/formulario}" th:object="${usuario}" method="post" onsubmit="return validar()">
+				<div class="form-group row">
+					<label for="nombreCompleto" class="col-sm-2 col-form-label">Nombre Completo</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{nombreCompleto}" class="form-control nombreCompleto"/>
+						<small class="form-text text-danger e-nombreCompleto"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="rut" class="col-sm-2 col-form-label">Rut</label>
+					<div class="col-sm-6">
+						<div class="row">
+							<div class="col-xs-8">
+								<input type="text" th:field="*{rut}" class="rut form-control" maxlength="8"/>
+							</div>
+							<span class="col-xs-1">-</span>
+							<div class="col-xs-3">
+								<input type="text" th:field="*{verificador}" class="verificador form-control" maxlength="1"/>
+							</div>
+						</div>
+						<p class="form-text text-danger e-rut"></p>
+						<p class="form-text text-danger e-verificador"></p>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label for="alumno.curso" class="col-sm-2 col-form-label">Curso</label>
+					<div class="col-sm-6">
+						<input type="text" class="alumno-curso form-control" th:field="*{alumno.curso}" />
+						<small class="form-text text-danger e-alumno-curso"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="fechaNacimiento" class="col-sm-2 col-form-label">Fecha de nacimiento</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{fechaNacimiento}" class="form-control e-fechaNacimiento"/>
+						<small class="form-text text-danger e-fechaNacimiento"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{direccion}" class="form-control direccion" />
+						<small class="form-text text-danger e-direccion"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="comuna" class="col-sm-2 col-form-label">Comuna</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{comuna}" class="form-control"/>
+						<small class="form-text text-danger e-comuna"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="telefonoFijo" class="col-sm-2 col-form-label">Teléfono fijo</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{telefonoFijo}" class="form-control telefonoFijo" maxlength="9"/>
+						<small class="form-text text-danger e-telefonoFijo"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="telefonoCelular" class="col-sm-2 col-form-label">Teléfono celular</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{telefonoCelular}" class="form-control telefonoCelular" maxlength="9"/>
+						<small class="form-text text-danger e-telefonoCelular"></small>
+					</div>
+				</div>
+				<h3>Datos del apoderado</h3>
+				
+				<div class="form-group row">
+					<label for="alumno.parentesco" class="col-sm-2 col-form-label">Parentesco</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{alumno.parentesco}" class="form-control alumno-parentesco"/>
+						<small class="form-text text-danger e-alumno-parentesco"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="alumno.nombreCompleto" class="col-sm-2 col-form-label">Nombre completo</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{alumno.nombreCompleto}" class="form-control alumno-nombreCompleto"/>
+						<small class="form-text text-danger e-alumno-nombreCompleto"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="alumno.rut" class="col-sm-2 col-form-label">Rut</label>
+					<div class="col-sm-6">
+						<div class="row">
+							<div class="col-xs-8">
+								<input type="text" th:field="*{alumno.rut}" class="alumno-rut form-control" maxlength="8"/>
+							</div>
+							<span class="col-xs-1">-</span>
+							<div class="col-xs-3">
+								<input type="text" th:field="*{alumno.verificador}" class="alumno-verificador form-control" maxlength="1"/>
+							</div>	
+						</div>
+						<p class="form-text text-danger e-alumno-rut"></p>
+						<p class="form-text text-danger e-alumno-verificador"></p>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label for="alumno.direccion" class="col-sm-2 col-form-label">Dirección</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{alumno.direccion}" class="form-control alumno-direccion" />
+						<small class="form-text text-danger e-alumno-direccion"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="alumno.comuna" class="col-sm-2 col-form-label">Comuna</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{alumno.comuna}" class="form-control alumno-comuna"/>
+						<small class="form-text text-danger e-alumno-comuna"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="alumno.telefonoFijo" class="col-sm-2 col-form-label">Teléfono fijo</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{alumno.telefonoFijo}" class="form-control alumno-telefonoFijo" />
+						<small class="form-text text-danger e-alumno-telefonoFijo"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="telefonoCelular" class="col-sm-2 col-form-label">Teléfono celular</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{alumno.telefonoCelular}" class="form-control alumno-telefonoCelular"/>
+						<small class="form-text text-danger e-alumno-telefonoCelular"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<input type="submit" class="btn btn-primary" th:value="${boton}"/>
+					</div>
+				</div>
+			</form>
+        </div>
+		<footer th:replace="layout/layout :: footer"></footer>
+    </div>
+</body>
+
+</html>

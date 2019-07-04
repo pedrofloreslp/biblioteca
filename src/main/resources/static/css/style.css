@@ -1,0 +1,9 @@
+@charset "ISO-8859-1";
+
+tr.selected {
+	background: #dedede !important;
+}
+
+.c-pointer{
+	cursor: pointer;
+}

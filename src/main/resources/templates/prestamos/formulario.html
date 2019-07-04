@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+
+
+
+<body>
+    <div id="wrapper">
+        <header th:replace="layout/layout :: header"></header>
+        <div id="page-wrapper">
+        
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" th:text="${titulo}"></h1>
+                </div>
+            </div>
+            
+            <div th:object="${prestamo}" th:remove="tag">
+				<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+					role="alert">
+					<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+				</ul>
+			</div>
+			
+            <form th:action="@{/prestamos/formulario}" th:object="${prestamo}" method="post">
+				
+				<div class="form-group row">
+					<label for="usuario.id" class="col-sm-2 col-form-label">Usuario</label>
+					<div class="col-sm-6">
+						<select th:field="*{usuario.id}" class="usuario-id form-control select-2">
+							<option th:each="u : ${usuarios}" th:text="${u.nombreCompleto}" th:value="${u.id}"></option>
+						</select>
+						<small class="form-text text-danger e-usuario-id"></small>
+					</div>
+				</div>
+				
+
+				<div class="form-group row">
+					<label for="createAt" class="col-sm-2 col-form-label">Copia</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" th:field="*{copia.codigo}" th:errorclass="'form-control alert-danger'" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('copia.codigo')}" th:errors="*{copia.codigo}"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<input type="submit" class="btn btn-primary" th:value="${boton}"/>
+					</div>
+				</div>
+			</form>
+        </div>
+		<footer th:replace="layout/layout :: footer"></footer>
+		<script>
+			$(document).ready(function() {
+			    $('.select-2').select2();
+			});
+		</script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <header th:replace="layout/layout :: header"></header>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" th:text="'Copias, Libro: '+${libro.nombre}"> </h1>
+                </div>
+            </div>
+            <div th:replace="layout/layout :: alerta"></div>
+            <div class="row">
+	            <div class="col-lg-12">
+	            	<h4>
+	            		<a th:href="@{/libros/copias/crear/}+${libro.id}" class="btn btn-primary">Generar</a>
+	            		<a id="btn-eliminar" class="btn btn-danger">Eliminar</a>
+	            	</h4>
+	            </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Copias
+                        </div>
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="tabla-copia">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>¿Está disponible?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="copia: ${copias}">
+                                        <td th:text="${copia.codigo}"></td>
+                                        <td th:text="${copia.disponible ? 'Sí' : 'No'}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<footer th:replace="layout/layout :: footer"></footer>
+		<script>
+			$(document).ready(function(){
+				var table = $('#tabla-copia').DataTable();
+				$('#tabla-copia tbody').on('click', 'tr', function(){
+					if ($(this).hasClass('selected')){
+						$(this).removeClass('selected');
+					} else {
+						table.$('tr.selected').removeClass('selected');
+						$(this).addClass('selected');
+					}
+				});
+				$("#btn-eliminar").click(function(){
+					if(table.$('tr').hasClass('selected')){
+						var id = table.$('tr.selected').find('td:nth-of-type(1)').text();
+						if(confirm('¿Desea eliminar la copia con código: '+id+'?')){
+							window.location.href = "/libros/copias/eliminar/"+id;
+						}
+					}else{
+						alert('Debe seleccionar una copia.');
+					}
+				});
+			});
+		</script>
+    </div>
+</body>
+
+</html>

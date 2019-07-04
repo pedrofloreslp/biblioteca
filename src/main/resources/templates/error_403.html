@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="panel panel-red">
+			<div class="panel-heading">
+				Error: Acceso Denegado
+			</div>
+			<div class="panel-body">
+				<p>Lo sentimos, no tienes permisos para acceder a este recurso.</p>
+			</div>
+			<div class="panel-footer">
+				<a th:href="@{/}" class="btn btn-outline-light" role="button">Volver a la plataforma</a>
+			</div>
+		</div>
+	</div>
+
+   <footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+
+</html>

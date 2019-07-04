@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <header th:replace="layout/layout :: header"></header>
+        <div id="page-wrapper">
+        
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" th:text="${titulo}"></h1>
+                </div>
+            </div>
+            
+            <div th:object="${libro}" th:remove="tag">
+				<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+					role="alert">
+					<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+				</ul>
+			</div>
+			
+            <form th:action="@{/libros/formulario}" th:object="${libro}" method="post">
+				<div class="form-group row">
+					<label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{nombre}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="createAt" class="col-sm-2 col-form-label">Autor</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" th:field="*{autor}" th:errorclass="'form-control alert-danger'" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="createAt" class="col-sm-2 col-form-label">Editorial</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" th:field="*{editorial}" th:errorclass="'form-control alert-danger'" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('editorial')}" th:errors="*{editorial}"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="email" class="col-sm-2 col-form-label">Ubicación</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{ubicacion}" class="form-control" th:errorclass="'form-control alert-danger'" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('ubicacion')}" th:errors="*{ubicacion}"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="nombre" class="col-sm-2 col-form-label">Categoria</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{categoria}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="tipoLibro" class="col-sm-2 col-form-label">Tipo de libro</label>
+					<div class="col-sm-6">
+						<select th:field="*{tipoLibro.id}" class="tipoLibro-id form-control">
+							<option value="0">Seleccione</option>
+							<option value="1">Infantiles</option>
+							<option value="2">Ciencia Ficción</option>
+							<option value="3">Textos Escolares</option>
+							<option value="4">Novelas</option>
+							<option value="5">Revistas</option>
+							<option value="6">Generalidades</option>
+						</select>
+						<small class="form-text text-danger e-tipoLibro-id"></small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="nombre" class="col-sm-2 col-form-label">Número de páginas</label>
+					<div class="col-sm-6">
+						<input type="text" th:field="*{numeroPaginas}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('numeroPaginas')}" th:errors="*{numeroPaginas}"></small>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<input type="submit" class="btn btn-primary" th:value="${boton}"/>
+					</div>
+				</div>
+			</form>
+        </div>
+		<footer th:replace="layout/layout :: footer"></footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <header th:replace="layout/layout :: header"></header>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Bienvenido a Biblioteca online</h1>
+                </div>
+            </div>
+            <div th:replace="layout/layout :: alerta"></div>
+        </div>
+		<footer th:replace="layout/layout :: footer"></footer>
+    </div>
+</body>
+
+</html>
